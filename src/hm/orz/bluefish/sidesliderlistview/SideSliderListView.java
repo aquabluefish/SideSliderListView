@@ -28,7 +28,7 @@ public class SideSliderListView extends Activity {
             labelList.add("List Item "+i);
         }
 
-        CustomAdapter mAdapter = new CustomAdapter(this, 0, labelList);
+        CustomAdapter mAdapter = new CustomAdapter(this, R.layout.list, labelList);
         list.setAdapter(mAdapter);
 
         list.setSelection(1);

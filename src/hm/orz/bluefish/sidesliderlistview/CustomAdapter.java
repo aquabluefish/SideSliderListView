@@ -36,7 +36,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
         if (view == null) {
             inflater =  (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list, null);
-            TextView label = (TextView)view.findViewById(R.id.tv);
+            TextView label = (TextView)view.findViewById(R.id.list_textView1);
             holder = new ViewHolder();
             holder.labelText = label;
             view.setTag(holder);
