@@ -4,59 +4,42 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-public class CustomAdapter extends ArrayAdapter<String>{
-
-    static class ViewHolder {
-        TextView labelText;
-    }
-
+public class CustomAdapter extends ArrayAdapter<Item>{
     private LayoutInflater inflater;
+    private int mItemLayoutResource;
 
     // コンストラクタ
-    public CustomAdapter(Context context,int textViewResourceId, ArrayList<String> labelList) {
-        super(context,textViewResourceId, labelList);
+    public CustomAdapter(Context context,int resource, ArrayList<Item> object) {
+        super(context,resource, object);
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mItemLayoutResource = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder;
-        View view = convertView;
+    	final CustomLayout view;
 
         // Viewを再利用している場合は新たにViewを作らない
-        if (view == null) {
-            inflater =  (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list, null);
-            TextView label = (TextView)view.findViewById(R.id.list_textView1);
-            holder = new ViewHolder();
-            holder.labelText = label;
-            view.setTag(holder);
+        if (convertView == null) {
+            view = (CustomLayout)inflater.inflate(mItemLayoutResource, null);
         } else {
-            holder = (ViewHolder) view.getTag();
+            view = (CustomLayout)convertView;
         }
 
-        // 特定の行のデータを取得
-        String str = getItem(position);
-
-        if (!TextUtils.isEmpty(str)) {
-            // テキストビューにラベルをセット
-            holder.labelText.setText(str);
-        }
+        view.bindView(getItem(position));
 
         // 行毎に背景色を変える
         if(position%2==0){
-            holder.labelText.setBackgroundColor(Color.parseColor("#aa0000"));
+        	view.mTitleView.setBackgroundColor(Color.parseColor("#aa0000"));
         }else{
-            holder.labelText.setBackgroundColor(Color.parseColor("#880000"));
+            view.mTitleView.setBackgroundColor(Color.parseColor("#880000"));
         }
 
         // XMLで定義したアニメーションを読み込む

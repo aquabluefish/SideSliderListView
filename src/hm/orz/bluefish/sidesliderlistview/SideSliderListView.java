@@ -19,13 +19,16 @@ public class SideSliderListView extends Activity {
 
         // ListViewのインスタンスを取得
         ListView list = (ListView)findViewById(R.id.listView1);
- 
-        // リストアイテムのラベルを格納するArrayListをインスタンス化
-        final ArrayList<String> labelList = new ArrayList<String>();
- 
+
+        // リストアイテムを格納するArrayListをインスタンス化
+        final ArrayList<Item> labelList = new ArrayList<Item>();
+
         // "List Item + ??"を20個リストに追加
         for(int i=1; i<=20; i++){
-            labelList.add("List Item "+i);
+            Item item = new Item();
+            item.title = "List Item "+i;
+            item.icon = R.drawable.ic_launcher;
+            labelList.add(item);
         }
 
         CustomAdapter mAdapter = new CustomAdapter(this, R.layout.list, labelList);
